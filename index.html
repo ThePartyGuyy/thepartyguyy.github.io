@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- FONT: to change it, pick any font on fonts.google.com, replace 'Outfit' in the link below and in the body font-family in the CSS. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Caveat&family=Chewy&family=Fredoka:wght@400;500;600;700&family=Pacifico&display=swap">
+<style>
+:root{--bg:#f2f2f5;--panel:rgba(255,255,255,.82);--text:#1b1b22;--muted:#5b5b68;--accent:#6b4eff;--line:rgba(0,0,0,.12);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14141a;--panel:rgba(24,24,32,.82);--text:#f1f1f6;--muted:#a5a5b4;--accent:#9a85ff;--line:rgba(255,255,255,.14);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14141a;--panel:rgba(24,24,32,.82);--text:#f1f1f6;--muted:#a5a5b4;--accent:#9a85ff;--line:rgba(255,255,255,.14);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg) center/cover fixed no-repeat;color:var(--text);font:16px/1.6 "Fredoka","Comic Sans MS",system-ui,sans-serif;text-shadow:0 1px 8px var(--bg),0 0 2px var(--bg)}
+input,button{font-family:inherit}
+main{max-width:1000px;margin:0 auto;padding:32px 16px 96px}
+header{text-align:center;padding:32px 16px;margin-bottom:16px}
+h1{margin:0 0 8px;font-size:clamp(2.4rem,8vw,4.2rem);line-height:1.1}
+header p{margin:0;color:var(--muted)}
+details{margin-bottom:16px}
+summary{cursor:pointer;list-style:none;padding:18px 22px;font-size:2.4rem;line-height:1.2;font-weight:400;display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"▾";color:var(--accent);opacity:0;transform:translateY(-6px);transition:opacity .25s,transform .25s}
+details:not([open]) summary::after{opacity:1;transform:none}
+summary .t{text-decoration:underline transparent;text-decoration-thickness:2px;text-underline-offset:6px;transition:text-decoration-color .2s}
+summary:hover .t{text-decoration-color:currentColor}
+.body{padding:0 22px 22px}
+.txt{margin:12px 0}
+.edit .txt{outline:1px dashed var(--accent);outline-offset:3px;min-height:1.6em}
+/* art grid */
+#artGrid,#artGrid2{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.tile{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;cursor:zoom-in;background:var(--line)}
+.tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}
+.tile:hover img{transform:scale(1.05)}
+.tile .ttl{position:absolute;top:0;left:0;right:0;padding:8px 10px;color:#fff;font-weight:600;font-size:.95rem;background:linear-gradient(rgba(0,0,0,.7),transparent);text-shadow:0 1px 3px #000}
+.tile .ttl input{width:100%;background:rgba(0,0,0,.5);color:#fff;border:1px solid #fff6;border-radius:4px;padding:2px 6px;font:inherit}
+.tile .rm{position:absolute;bottom:6px;right:6px;display:none}
+.edit .tile .rm{display:block}
+/* slots */
+.slot{position:relative;display:none}
+.slot.has{display:block}
+.edit .slot{display:block}
+.slot img{display:none;width:100%;height:auto;border-radius:10px}
+.slot.has img{display:block}
+.slot .ph{display:none;align-items:center;justify-content:center;min-height:90px;border:2px dashed var(--accent);border-radius:10px;color:var(--muted);font-size:.9rem;text-align:center;padding:8px}
+.edit .slot:not(.has) .ph{display:flex}
+.slot .up{display:none;position:absolute;top:6px;right:6px}
+.edit .slot .up{display:block}
+.logo{max-width:420px;margin:12px auto}
+.two{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;align-items:start;margin:16px 0}
+.video{aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#000;display:none}
+.video.has{display:block}
+.video iframe{width:100%;height:100%;border:0}
+.edit .vurl{display:block}
+.vurl{display:none;margin-top:8px;width:100%}
+.gifs{display:flex;gap:10px;margin-top:16px}
+.gifs .slot{flex:1;min-width:0}
+.cta{display:inline-block;margin-top:8px;padding:12px 28px;background:var(--accent);color:#fff;border-radius:999px;text-decoration:none;font-weight:700}
+.center{text-align:center}
+.btn,button{font:inherit;cursor:pointer}
+h1,summary,.cta,.tile .ttl,#bar button{font-family:"Chewy","Fredoka",cursive}
+.edit main{padding-top:120px}
+/* socials (always visible, not inside a collapsible section) */
+#socials{max-width:1000px;margin:0 auto;padding:24px 16px calc(96px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);text-align:center}
+#socials h2{margin:0 0 8px;font-size:.85rem;font-weight:500;letter-spacing:.2em;color:var(--muted)}
+#socials .row{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap}
+#socials a{display:inline-flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;font-size:.95rem}
+#socials a:hover{color:var(--accent)}
+#socials svg{width:20px;height:20px;fill:currentColor;flex:none}
+#socials .dot{color:var(--muted)}
+#tb{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);display:none;flex-wrap:wrap;gap:4px;align-items:center;justify-content:center;padding:6px 8px;background:var(--bg);color:var(--text);border-radius:12px;box-shadow:0 4px 18px #0006;z-index:6;width:max-content;max-width:calc(100% - 20px);text-shadow:none;font-size:.85rem}
+.edit #tb{display:flex}
+#tb button{min-width:30px;padding:4px 7px;border:0;border-radius:6px;background:var(--line);color:var(--text)}
+#tb button:hover{background:var(--accent);color:#fff}
+#tb select,#tb input[type=text]{padding:3px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:inherit;max-width:110px}
+#tb input[type=color]{width:28px;height:26px;padding:0;border:0;background:none;cursor:pointer}
+.sm{font-size:.75rem;padding:4px 8px;border-radius:6px;border:0;background:var(--accent);color:#fff}
+#bar{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;justify-content:flex-end;max-width:calc(100% - 28px);gap:8px;z-index:5}
+#bar button{padding:10px 16px;border-radius:999px;border:0;background:var(--accent);color:#fff;font-weight:700;box-shadow:0 4px 14px #0005}
+#bar .extra{display:none}
+.edit #bar .extra{display:block}
+#lb{position:fixed;inset:0;background:rgba(0,0,0,.94);overflow:auto;display:none;z-index:10}
+#lb.on{display:flex}
+#lb img{margin:auto;display:block;max-width:100vw;max-height:100vh;cursor:zoom-in}
+#lb.zoom img{max-width:none;max-height:none;flex:none;cursor:zoom-out}
+.two iframe{max-width:100%}
+#lb button{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:14px;padding:8px 14px;border-radius:999px;border:0;font-weight:700}
+@media(max-width:700px){#artGrid,#artGrid2{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.gifs{flex-wrap:wrap}.gifs .slot{flex:1 1 30%}}
+.live #bar,.live #tb{display:none!important}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1 class="txt" data-text="title">Your Title Here</h1>
+  <p class="txt" data-text="desc">A short description of who you are and what you do.</p>
+</header>
+
+<!--
+  BACKGROUND: use "Edit mode" -> "Change background" (bottom-right) to upload an image.
+  Or hardcode in CSS:  body { background-image:url('your-image.jpg'); }
+-->
+
+<!-- ============ DIGITAL ART ============ -->
+<details open>
+  <summary><span class="t">Digital Art</span></summary>
+  <div class="body">
+    <!-- TEXT ABOVE the gallery: click "Edit mode" and type directly, or edit this paragraph's HTML. -->
+    <p class="txt" data-text="art-top">Text above the gallery.</p>
+
+    <!-- IMAGES: do NOT put <img> tags here. Use "Edit mode" -> "Add art images" (multiple files OK).
+         Each image becomes a square tile (max 3 per row), the title shows on top of it,
+         and clicking opens it fitted to the screen (whole image); click the image again to zoom to original size, again to un-zoom (Esc closes).
+         Type each tile's title in its input while in Edit mode. -->
+    <div id="artGrid"></div>
+
+    <!-- TEXT BELOW the gallery -->
+    <p class="txt" data-text="art-bottom">Text below the gallery.</p>
+
+    <!-- SECOND GALLERY: same behavior as the first (max 3 per row, title on top, click to view). Upload via Edit mode -> "Add images (gallery 2)". -->
+    <div id="artGrid2"></div>
+  </div>
+</details>
+
+<!-- ============ GAME DEVELOPING ============ -->
+<details open>
+  <summary><span class="t">Game Developing</span></summary>
+  <div class="body">
+    <!-- LOGO: upload via Edit mode (slot "logo"). It appears centered at the top of this section. -->
+    <div class="slot logo" data-slot="logo"><div class="ph">Game logo — upload</div><img alt="Game logo"></div>
+
+    <div class="two">
+      <div>
+        <!-- YOUTUBE: in Edit mode paste a YouTube link in the field under the player. Player sits on the left. -->
+        <div class="video" id="video"></div>
+      </div>
+      <!-- TEXT on the right side -->
+      <div class="txt" data-text="game-text">Describe your game here.</div>
+    </div>
+
+    <!-- EXTRA TEXT: sits under the video + side text, above the GIFs. Edit it in Edit mode. -->
+    <div class="txt" data-text="game-text2">More text about your game here.</div>
+
+    <!-- GIFS: 5 slots in a row. Upload each via Edit mode. Remove the last .slot below if you want only 4. -->
+    <div class="gifs">
+      <div class="slot" data-slot="gif1"><div class="ph">GIF 1</div><img alt="GIF 1"></div>
+      <div class="slot" data-slot="gif2"><div class="ph">GIF 2</div><img alt="GIF 2"></div>
+      <div class="slot" data-slot="gif3"><div class="ph">GIF 3</div><img alt="GIF 3"></div>
+      <div class="slot" data-slot="gif4"><div class="ph">GIF 4</div><img alt="GIF 4"></div>
+      <div class="slot" data-slot="gif5"><div class="ph">GIF 5</div><img alt="GIF 5"></div>
+    </div>
+
+    <!-- BELOW THE GIFS: text on the left, itch.io widget on the right. To change the widget, replace the <iframe> below with a new embed code from itch.io. -->
+    <div class="two">
+      <div class="txt" data-text="game-text3">Text below the GIFs here.</div>
+      <div>
+        <iframe frameborder="0" src="https://itch.io/embed/4126498?border_width=5&amp;bg_color=000000&amp;fg_color=ff2f46&amp;link_color=ffffff&amp;border_color=bebebe" width="560" height="175"><a href="https://golden-yokais.itch.io/tanuki-graffiti">Tanuki Graffiti by Golden Yokais</a></iframe>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ============ COMMISSIONS ============ -->
+<details open>
+  <summary><span class="t">Commissions</span></summary>
+  <div class="body center">
+    <!-- IMAGE on top: upload via Edit mode (slot "commission"). -->
+    <div class="slot" data-slot="commission"><div class="ph">Commission image — upload</div><img alt="Commissions"></div>
+    <!-- TEXT underneath -->
+    <p class="txt" data-text="comm-text">Commission info, prices and terms here.</p>
+    <!-- BUTTON: set your link in COMMISSION_LINK in the script at the bottom of this file. -->
+    <a class="cta" id="cta" href="https://ko-fi.com/thepartyguy" target="_blank" rel="noopener">Commission me</a>
+  </div>
+</details>
+</main>
+
+<!-- ============ SOCIALS ============
+     Change the links in the two href="" below. To use your own logo image instead of the built-in icon,
+     replace the <svg>...</svg> in that link with <img src="your-logo.png" alt="" width="20" height="20">.
+     Change the text next to each logo by editing the <span>. -->
+<footer id="socials">
+  <h2>SOCIALS</h2>
+  <div class="row">
+    <a href="https://x.com/ThePartyGuyy" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      <span>X / Twitter</span>
+    </a>
+    <span class="dot" aria-hidden="true">•</span>
+    <a href="https://discord.gg/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.1.246.198.373.292a.077.077 0 0 1-.006.128 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+      <span>Discord - thapartyguy</span>
+    </a>
+  </div>
+</footer>
+
+<div id="lb"><button id="lbx">Close ✕</button><img alt=""></div>
+<script src="content.js"></script>
+<script>
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const SITE = window.SITE || {};
+const COMMISSION_LINK = ""; // optional: overrides the Commission button link
+if (COMMISSION_LINK) $("#cta").href = COMMISSION_LINK;
+
+$$("[data-text]").forEach(el => { const v = (SITE.text || {})[el.dataset.text]; if (v != null) el.innerHTML = v; });
+if (SITE.bg) document.body.style.backgroundImage = `url("${SITE.bg}")`;
+$$(".slot").forEach(el => { const u = (SITE.slots || {})[el.dataset.slot]; if (u) { $("img", el).src = u; el.classList.add("has"); } });
+
+[["art", "#artGrid"], ["art2", "#artGrid2"]].forEach(([k, sel]) => {
+  const g = $(sel);
+  (SITE[k] || []).forEach(a => {
+    const t = document.createElement("div"); t.className = "tile";
+    t.innerHTML = '<img alt=""><div class="ttl"></div>';
+    $("img", t).src = a.src; $("img", t).alt = a.title || ""; $(".ttl", t).textContent = a.title || "";
+    t.onclick = () => openLb(a.src); g.appendChild(t);
+  });
+});
+
+const lb = $("#lb");
+function openLb(u) { lb.classList.remove("zoom"); $("img", lb).src = u; lb.classList.add("on"); lb.scrollTo(0, 0); }
+$("img", lb).onclick = e => {
+  const im = e.target, r = im.getBoundingClientRect(), fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height;
+  lb.classList.toggle("zoom");
+  const r2 = im.getBoundingClientRect();
+  lb.scrollLeft += r2.left + fx * r2.width - e.clientX; lb.scrollTop += r2.top + fy * r2.height - e.clientY;
+};
+const closeLb = () => lb.classList.remove("on");
+$("#lbx").onclick = closeLb;
+lb.onclick = e => { if (e.target === lb) closeLb(); };
+addEventListener("keydown", e => { if (e.key === "Escape") closeLb(); });
+
+const m = (SITE.video || "").match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/);
+if (m) { $("#video").innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${m[1]}" allowfullscreen allow="accelerometer; encrypted-media; picture-in-picture"></iframe>`; $("#video").classList.add("has"); }
+</script>
+</body>
+</html>
